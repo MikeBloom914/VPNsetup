@@ -10,13 +10,13 @@
 #______________________________________________________________________________#
 #                                                                              #
 # You will need the following information:                                     #
-# ~ your email address (hereafter: \mike)                               #
-# ~ your server's internet protocol address (hereafter: 167.99.48.165)         #
+# ~ your email address (hereafter: mikebloom914@gmail.com)                               #
+# ~ your server's internet protocol address (hereafter: 159.89.91.203)         #
 # ~ your server's name (hereafter: bloom)                                 #
 #                                                                              #
 # Be advised:                                                                  #
 # ~ bloom must be a string that is not "root"                          #
-# ~ bloom should be a string that is longer than eight characters      #
+# ~ car should be a string that is longer than eight characters      #
 # ~ 1212 must be an integer that is between 1024 and 65535       #
 #                                                                              #
 ################################################################################
@@ -30,14 +30,14 @@
 
 #ssh-keygen -t rsa
 
-sh -c 'echo "bloom:bloom" >> ~/.credentials'
+sh -c 'echo "bloom:car" >> ~/.credentials'
 
 #cat ~/.ssh/id_rsa.pub   #to get public key if a new one
 
-scp vps_start.sh root@167.99.48.165:/root/
-scp remote.sh root@167.99.48.165:/root/
-scp end.sh root@167.99.48.165:/root/
-ssh root@167.99.48.165 'bash vps_start.sh'
+scp vps_start.sh root@159.89.91.203:/root/
+scp remote.sh root@159.89.91.203:/root/
+scp end.sh root@159.89.91.203:/root/
+ssh root@159.89.91.203 'bash vps_start.sh'
 #ssh -o "StrictHostKeyChecking no"
 
 
@@ -70,11 +70,11 @@ mkdir /etc/ssh/bloom
 # ::| !_______! |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::!/         \!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 
-scp ~/.ssh/id_rsa.pub root@167.99.48.165:/etc/ssh/bloom/authorized_keys
+scp ~/.ssh/id_rsa.pub root@159.89.91.203:/etc/ssh/bloom/authorized_keys
 
-scp .credentials root@167.99.48.165:/home/bloom/
+scp .credentials root@159.89.91.203:/home/bloom/
 
-ssh root@167.99.48.165 'bash remote.sh'
+ssh root@159.89.91.203 'bash remote.sh'
 
 
 # ::|\ ________ /|:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
@@ -249,7 +249,7 @@ sh -c 'echo "findtime = 1200" >> /etc/fail2ban/jail.local'
 
 sh -c 'echo "maxretry = 3" >> /etc/fail2ban/jail.local'
 
-sh -c 'echo "destemail = \mike" >> /etc/fail2ban/jail.local'
+sh -c 'echo "destemail = mikebloom914@gmail.com" >> /etc/fail2ban/jail.local'
 
 sh -c 'echo "sendername = security@bloom" >> /etc/fail2ban/jail.local'
 
@@ -288,7 +288,7 @@ rm /home/bloom/.credentials
 systemctl status fail2ban firewalld nginx ntp sshd
 
 
-ssh -p 1212 bloom@167.99.48.165
+ssh -p 1212 bloom@159.89.91.203
 
 #sudo apt-get -y install postgresql postgresql-contrib
 
@@ -296,7 +296,7 @@ ssh -p 1212 bloom@167.99.48.165
 
 #psql
 
-#CREATE USER bloom WITH PASSWORD 'bloom';
+#CREATE USER bloom WITH PASSWORD 'car';
 
 #CREATE DATABASE master OWNER bloom;
 
@@ -304,7 +304,7 @@ ssh -p 1212 bloom@167.99.48.165
 
 #su - bloom
 
-#bloom
+#car
 
 #psql master
 
@@ -326,7 +326,7 @@ ssh -p 1212 bloom@167.99.48.165
 
 #);
 
-#git clone git://github.com/katabasis/katabasis.gitis/katabasis.git//github.com/katabasis/katabasis.git       ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";/s/^.*$/        ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";#tmp_id_6/' /etc/nginx/nginx.conf
+#git clone git://github.com/katabasis/katabasis.gitom/katabasis/katabasis.git       ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";/s/^.*$/        ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";#tmp_id_6/' /etc/nginx/nginx.conf
 
 # sed -i '/^        ssl_certificate_key \"\/etc\/pki\/nginx\/private\/server\.key\";#tmp_id_6/a ssl_protocols TLSv1 TLSv1\.1 TLSv1\.2;' /etc/nginx/nginx.conf
 

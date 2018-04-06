@@ -5,9 +5,9 @@
 # ::| !_______! |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::!/         \!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 
-scp ~/.ssh/id_rsa.pub root@167.99.48.165:/etc/ssh/bloom/authorized_keys
+scp ~/.ssh/id_rsa.pub root@159.89.91.203:/etc/ssh/bloom/authorized_keys
 
-scp .credentials root@167.99.48.165:/home/bloom/
+scp .credentials root@159.89.91.203:/home/bloom/
 
-ssh root@167.99.48.165 'bash remote.sh'
+ssh root@159.89.91.203 'bash remote.sh'
 

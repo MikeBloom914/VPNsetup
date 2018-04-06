@@ -9,13 +9,13 @@
 
 #ssh-keygen -t rsa
 
-sh -c 'echo "bloom:bloom" >> ~/.credentials'
+sh -c 'echo "bloom:car" >> ~/.credentials'
 
 #cat ~/.ssh/id_rsa.pub   #to get public key if a new one
 
-scp vps_start.sh root@167.99.48.165:/root/
-scp remote.sh root@167.99.48.165:/root/
-scp end.sh root@167.99.48.165:/root/
-ssh root@167.99.48.165 'bash vps_start.sh'
+scp vps_start.sh root@159.89.91.203:/root/
+scp remote.sh root@159.89.91.203:/root/
+scp end.sh root@159.89.91.203:/root/
+ssh root@159.89.91.203 'bash vps_start.sh'
 #ssh -o "StrictHostKeyChecking no"
 

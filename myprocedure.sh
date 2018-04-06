@@ -24,7 +24,7 @@
 # Make sure you are opening this file from the same directory your python file,#
 # 'myprocedure.py file' is in, as well as where it grabs this file from in the #
 # two 'with open' lines inside the 'myprocedure.py' 						   #
-#																		 	   #	
+#																		 	   #
 #!!!!!!!!!!!!!!!!!!!!!!!!!READ ABOVE BEFORE CONTINUING!!!!!!!!!!!!!!!!!!!!!!!!!#
 #!!!!!! JUST RUN THE 'myprocedure.py' FILE AND ENTER IN YES WHEN PROMPTED!!!!!!#
 
@@ -43,7 +43,7 @@ ssh root@<vps_ip_addr> 'bash vps_start.sh'
 
 # ::|\ ________ /|:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| |        | |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
-# ::| | remote | |:::::::::::ls::::::::::::::::::::::::::::::::::::::::::::::::: #
+# ::| | remote | |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| !________! |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::!/          \!:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 
@@ -61,7 +61,7 @@ cp '.nanorc' /home/<os_username>/
 
 mkdir /etc/ssh/<os_username>
 
-#exit 
+#exit
 
 
 # ::|\ _______ /|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
@@ -112,7 +112,7 @@ apt-get -y install firewalld ntp nginx fail2ban postgresql postgresql-contrib
 bash end.sh
 
 
-###Why do I have this line in
+
 systemctl start firewalld
 
 firewall-cmd --reload

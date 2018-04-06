@@ -136,7 +136,7 @@ sh -c 'echo "findtime = 1200" >> /etc/fail2ban/jail.local'
 
 sh -c 'echo "maxretry = 3" >> /etc/fail2ban/jail.local'
 
-sh -c 'echo "destemail = \mike" >> /etc/fail2ban/jail.local'
+sh -c 'echo "destemail = mikebloom914@gmail.com" >> /etc/fail2ban/jail.local'
 
 sh -c 'echo "sendername = security@bloom" >> /etc/fail2ban/jail.local'
 
