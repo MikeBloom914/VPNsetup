@@ -2,7 +2,7 @@
 # $$$$$$$$$$$$$$$$$$$$|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|$$$$$$$$$$$$$$$$$$$$ #
 #    $$$$$$$$$$$$$$$$$|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|$$$$$$$$$$$$$$$$$    #
 #       $$$$$$$$$$$$$$|>>>|                          |<<<|$$$$$$$$$$$$$$       #
-#          $$$$$$$$$$$|>>>|                       	 |<<<|$$$$$$$$$$$          #
+#          $$$$$$$$$$$|>>>|                          |<<<|$$$$$$$$$$$          #
 #       $$$$$$$$$$$$$$|>>>|    Making Life Easier    |<<<|$$$$$$$$$$$$$$       #
 #    $$$$$$$$$$$$$$$$$|>>>|          @Bloom          |<<<|$$$$$$$$$$$$$$$$$    #
 # $$$$$$$$$$$$$$$$$$$$|>>>|                          |<<<|$$$$$$$$$$$$$$$$$$$$ #
@@ -31,38 +31,37 @@
 import os
 import time
 
+### Get's all the inputs you need ###
+
+email = input("Enter email address: ")
+vps_address = input("Enter servers ip address: ")
+vps_name = input("Enter servers name: ")
+
+username = input("Enter OS username: ")
+password = input("Enter OS password: ")
+ssh_port = input("Enter port # (bet 1024 and 65535): ")
+
+replacements = {'<email_addr>': email, '<vps_ip_addr>': vps_address, '<vps_name>': vps_name,
+                '<os_username>': username, '<os_password>': password, '<defined_ssh_port>': ssh_port}
 
 try:
-    os.remove('/Users/bloom/byte/vps/myfile.sh' and '/Users/bloom/byte/vps/start.sh' and '/Users/bloom/byte/vps/vps_start.sh' and '/Users/bloom/byte/vps/local.sh' and '/Users/bloom/byte/vps/remote.sh' and '/Users/bloom/byte/vps/end.sh' and '/Users/bloom/byte/vps/login.sh')
+    os.remove('myfile.sh' and 'start.sh' and 'vps_start.sh' and 'local.sh' and 'remote.sh' and 'end.sh' and 'login.sh')
 except OSError:
     pass
 
-
-email  	 	= input("Enter email address: ")
-vps_address	= input("Enter servers ip address: ")
-vps_name	= input("Enter servers name: ")
-
-username 	= input("Enter OS username: ")
-password 	= input("Enter OS password: ")
-ssh_port 	= input("Enter port # (bet 1024 and 65535): ")
-
-
-replacements = {'<email_addr>':email, '<vps_ip_addr>':vps_address ,'<vps_name>':vps_name ,
-'<os_username>':username, '<os_password>':password, '<defined_ssh_port>':ssh_port}
-
 lines = []
 
-with open ('/Users/bloom/byte/vps/myprocedure.sh', 'r+') as f:
-	for line in f:
-		for key, value in replacements.items():
-			line = line.replace(key, value)
-		lines.append(line)
+with open('myprocedure.sh', 'r+') as f:
+    for line in f:
+        for key, value in replacements.items():
+            line = line.replace(key, value)
+        lines.append(line)
 
-os.system('touch /Users/bloom/byte/vps/myfile.sh')
+os.system('touch myfile.sh')
 
-with open ('/Users/bloom/byte/vps/myfile.sh', 'r+') as outf:
-	for line in lines:
-		outf.write(line)
+with open('myfile.sh', 'r+') as outf:
+    for line in lines:
+        outf.write(line)
 
 outf.close()
 
@@ -90,15 +89,3 @@ os.system('bash start.sh')
 os.system('bash local.sh')
 
 os.system('bash login.sh')
-
-
-
-
-
-
-
-
-
-
-
-
