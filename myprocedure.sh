@@ -20,10 +20,10 @@
 # ~ <defined_ssh_port> must be an integer that is between 1024 and 65535       #
 #                                                                              #
 ################################################################################
-#																			   #
+#																			                                         #
 # Make sure you are opening this file from the same directory your python file,#
 # 'myprocedure.py file' is in, as well as where the myprocedure.sh file is in  #
-#																		 	   #
+#																		 	                                         #
 #!!!!!!!!!!!!!!!!!!!!!!!!!READ ABOVE BEFORE CONTINUING!!!!!!!!!!!!!!!!!!!!!!!!!#
 #!!!!!! JUST RUN THE 'myprocedure.py' FILE AND ENTER IN YES WHEN PROMPTED!!!!!!#
 
