@@ -289,40 +289,4 @@ systemctl status fail2ban firewalld nginx ntp sshd
 
 ssh -p <defined_ssh_port> <os_username>@<vps_ip_addr>
 
-#sudo apt-get -y install postgresql postgresql-contrib
 
-#su - postgres
-
-#psql
-
-#CREATE USER <os_username> WITH PASSWORD '<os_password>';
-
-#CREATE DATABASE master OWNER <os_username>;
-
-#\q
-
-#su - <os_username>
-
-#<os_password>
-
-#psql master
-
-#CREATE TABLE market (
-
-#pk serial PRIMARY KEY,
-
-#time float,
-
-#open float,
-
-#high float,
-
-#low float,
-
-#close float,
-
-#volume integer
-
-#);
-
-#git clone git://github.com/katabasis/katabasis.git
