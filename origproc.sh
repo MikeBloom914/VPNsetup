@@ -1,13 +1,18 @@
+################################################################################
+#                                                                              #
+#   Katabasis is licensed under the GNU General Public License, version 2.0.   #
+#                                                                              #
+################################################################################
 
-#______________________________________________________________________________#
-# $$$$$$$$$$$$$$$$$$$$|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|$$$$$$$$$$$$$$$$$$$$ #
-#    $$$$$$$$$$$$$$$$$|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|$$$$$$$$$$$$$$$$$    #
-#       $$$$$$$$$$$$$$|>>>|                          |<<<|$$$$$$$$$$$$$$       #
-#          $$$$$$$$$$$|>>>|                       	 |<<<|$$$$$$$$$$$          #
-#       $$$$$$$$$$$$$$|>>>|    Making Life Easier    |<<<|$$$$$$$$$$$$$$       #
-#    $$$$$$$$$$$$$$$$$|>>>|          @Bloom          |<<<|$$$$$$$$$$$$$$$$$    #
-# $$$$$$$$$$$$$$$$$$$$|>>>|                          |<<<|$$$$$$$$$$$$$$$$$$$$ #
-#______________________________________________________________________________#
+################################################################################
+#                                                                              #
+# *++*+++***+**++*+++*|%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%|*+++*++**+***+++*++* #
+# ++*+++***+**++*+++**|%%%|                          |%%%|**+++*++**+***+++*++ #
+# +*+++***+**++*+++***|%%%|                     preA |%%%|***+++*++**+***+++*+ #
+# *+++***+**++*+++***+|%%%|    K A T A B A S I S     |%%%|+***+++*++**+***+++* #
+# +++***+**++*+++***++|%%%|                          |%%%|++***+++*++**+***+++ #
+# ++***+**++*+++***+++|%%%|                          |%%%|+++***+++*++**+***++ #
+# +***+**++*+++***+++*|%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%|*+++***+++*++**+***+ #
 #                                                                              #
 # You will need the following information:                                     #
 # ~ your email address (hereafter: <email_addr>)                               #
@@ -20,31 +25,26 @@
 # ~ <defined_ssh_port> must be an integer that is between 1024 and 65535       #
 #                                                                              #
 ################################################################################
-#																			                                         #
-# Make sure you are opening this file from the same directory your python file,#
-# 'myprocedure.py file' is in, as well as where the myprocedure.sh file is in  #
-#																		 	                                         #
-#!!!!!!!!!!!!!!!!!!!!!!!!!READ ABOVE BEFORE CONTINUING!!!!!!!!!!!!!!!!!!!!!!!!!#
-#!!!!!! JUST RUN THE 'myprocedure.py' FILE AND ENTER IN YES WHEN PROMPTED!!!!!!#
 
-#ssh-keygen -t rsa
+# ::|\ _______ /|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
+# ::| |       | |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
+# ::| | local | |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
+# ::| !_______! |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
+# ::!/         \!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 
-sh -c 'echo "<os_username>:<os_password>" > ~/.credentials'
+ssh-keygen -t rsa
 
-#cat ~/.ssh/id_rsa.pub   #to get public key if a new one
+sh -c 'echo "<os_username>:<os_password>" >> .credentials'
 
-scp vps_start.sh root@<vps_ip_addr>:/root/
-scp remote.sh root@<vps_ip_addr>:/root/
-scp end.sh root@<vps_ip_addr>:/root/
-ssh root@<vps_ip_addr> 'bash vps_start.sh'
-#ssh -o "StrictHostKeyChecking no"
-
+ssh root@<vps_ip_addr>
 
 # ::|\ ________ /|:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| |        | |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| | remote | |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| !________! |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::!/          \!:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
+
+yes
 
 sh -c 'echo "set const" >> .nanorc'
 
@@ -56,12 +56,11 @@ adduser --disabled-password --gecos "" <os_username>
 
 usermod -aG sudo <os_username>
 
-cp '.nanorc' /home/<os_username>/
+cp .nanorc /home/<os_username>/
 
 mkdir /etc/ssh/<os_username>
 
-#exit
-
+exit
 
 # ::|\ _______ /|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| |       | |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
@@ -69,12 +68,11 @@ mkdir /etc/ssh/<os_username>
 # ::| !_______! |::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::!/         \!::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 
-scp ~/.ssh/id_rsa.pub root@<vps_ip_addr>:/etc/ssh/<os_username>/authorized_keys
+scp .ssh/id_rsa.pub root@<vps_ip_addr>:/etc/ssh/<os_username>/authorized_keys
 
-scp ~/.credentials root@<vps_ip_addr>:/home/<os_username>/
+scp .credentials root@<vps_ip_addr>:/home/<os_username>/
 
-ssh root@<vps_ip_addr> 'bash remote.sh'
-
+ssh root@<vps_ip_addr>
 
 # ::|\ ________ /|:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
 # ::| |        | |:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: #
@@ -102,15 +100,9 @@ sh -c 'echo "# Added by Katabasis build process" >> /etc/ssh/sshd_config'
 
 sh -c 'echo "AllowUsers <os_username>" >> /etc/ssh/sshd_config'
 
-apt-get update ## Added by me
-
 systemctl reload sshd
 
-apt-get -y install firewalld ntp nginx fail2ban postgresql postgresql-contrib
-
-bash end.sh
-
-
+apt-get -y install firewalld
 
 systemctl start firewalld
 
@@ -128,6 +120,8 @@ systemctl reload sshd
 
 timedatectl set-timezone America/New_York
 
+apt-get -y install ntp
+
 fallocate -l 3G /swapfile
 
 chmod 600 /swapfile
@@ -143,6 +137,8 @@ sh -c "echo 'vm.swappiness=10' >> /etc/sysctl.conf"
 sysctl vm.vfs_cache_pressure=30
 
 sh -c 'echo "vm.vfs_cache_pressure=30" >> /etc/sysctl.conf'
+
+apt-get -y install nginx
 
 sh -c 'echo "log_format timekeeper \$remote_addr - \$remote_user [\$time_local] " >> /etc/nginx/conf.d/timekeeper-log-format.conf'
 
@@ -212,6 +208,112 @@ sed -i '/listen \[::\]:80 default_server;/a \
 
 ' /etc/nginx/sites-available/default
 
+# sed -i -e '/^#    server {/s/^.*$/    server {/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        listen       443 ssl http2 default_server;/s/^.*$/        listen       443 ssl http2 default_server;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        listen       \[::\]:443 ssl http2 default_server;/s/^.*$/        listen       \[::\]:443 ssl http2 default_server;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        server_name  _;/s/^.*$/        server_name  _;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        root         \/usr\/share\/nginx\/html;/s/^.*$/        root         \/usr\/share\/nginx\/html;#tmp_id_2/' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a resolver 8\.8\.8\.8 8\.8\.4\.4 208\.67\.222\.222 208\.67\.220\.220 216\.146\.35\.35 216\.146\.36\.36 valid=300s;' /etc/nginx/nginx.conf
+
+# sed -i 's/resolver 8\.8\.8\.8 8\.8\.4\.4 208\.67\.222\.222 208\.67\.220\.220 216\.146\.35\.35 216\.146\.36\.36 valid=300s;/        resolver 8\.8\.8\.8 8\.8\.4\.4 208\.67\.222\.222 208\.67\.220\.220 216\.146\.35\.35 216\.146\.36\.36 valid=300s;/' /etc/nginx/nginx.conf
+
+# sed -i '/^        resolver 8\.8\.8\.8 8\.8\.4\.4 208\.67\.222\.222 208\.67\.220\.220 216\.146\.35\.35 216\.146\.36\.36 valid=300s;/a resolver_timeout 3s;' /etc/nginx/nginx.conf
+
+# sed -i 's/resolver_timeout 3s;/        resolver_timeout 3s;/' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a \
+
+# #' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a #        add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains; preload\";' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a add_header Strict-Transport-Security \"max-age=31536000\";' /etc/nginx/nginx.conf
+
+# sed -i 's/add_header Strict-Transport-Security \"max-age=31536000\";/        add_header Strict-Transport-Security \"max-age=31536000\";/' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a add_header X-Frame-Options DENY;' /etc/nginx/nginx.conf
+
+# sed -i 's/add_header X-Frame-Options DENY;/        add_header X-Frame-Options DENY;/' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a add_header X-Content-Type-Options nosniff;' /etc/nginx/nginx.conf
+
+# sed -i 's/add_header X-Content-Type-Options nosniff;/        add_header X-Content-Type-Options nosniff;/' /etc/nginx/nginx.conf
+
+# sed -i '/^        root         \/usr\/share\/nginx\/html;#tmp_id_2/a \
+
+# #' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_certificate "\/etc\/pki\/nginx\/server\.crt";/s/^.*$/        ssl_certificate "\/etc\/pki\/nginx\/server\.crt";/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";/s/^.*$/        ssl_certificate_key "\/etc\/pki\/nginx\/private\/server\.key";#tmp_id_6/' /etc/nginx/nginx.conf
+
+# sed -i '/^        ssl_certificate_key \"\/etc\/pki\/nginx\/private\/server\.key\";#tmp_id_6/a ssl_protocols TLSv1 TLSv1\.1 TLSv1\.2;' /etc/nginx/nginx.conf
+
+# sed -i 's/ssl_protocols TLSv1 TLSv1\.1 TLSv1\.2;/        ssl_protocols TLSv1 TLSv1\.1 TLSv1\.2;/' /etc/nginx/nginx.conf
+
+# sed -i '/^        ssl_certificate_key \"\/etc\/pki\/nginx\/private\/server\.key\";#tmp_id_6/a ssl_ecdh_curve secp384r1;' /etc/nginx/nginx.conf
+
+# sed -i 's/ssl_ecdh_curve secp384r1;/        ssl_ecdh_curve secp384r1;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_session_cache shared:SSL:1m;/s/^.*$/        ssl_session_cache shared:SSL:1m;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_session_timeout  10m;/s/^.*$/        ssl_session_timeout  10m;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_ciphers HIGH:!aNULL:!MD5;/s/^.*$/        ssl_ciphers \"EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH\";/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        ssl_prefer_server_ciphers on;/s/^.*$/        ssl_prefer_server_ciphers on;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        # Load configuration files for the default server block\./s/^.*$/        # Load configuration files for the default server block\./' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        include \/etc\/nginx\/default\.d\/\*\.conf;/s/^.*$/        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a \}#tmp_id_7' /etc/nginx/nginx.conf
+
+# sed -i 's/\}#tmp_id_7/        \}#tmp_id_7/' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a return 444;#tmp_id_4' /etc/nginx/nginx.conf
+
+# sed -i 's/return 444;#tmp_id_4/            return 444;#tmp_id_4/' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a if (\$allowed_country = no) \{#tmp_id_8' /etc/nginx/nginx.conf
+
+# sed -i 's/if (\$allowed_country = no) {#tmp_id_8/        if (\$allowed_country = no) {#tmp_id_8/' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a \
+
+# #' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a access_log \/var\/log\/nginx\/server-block-1-access.log  timekeeper;#tmp_id_9' /etc/nginx/nginx.conf
+
+# sed -i -e 's/access_log \/var\/log\/nginx\/server-block-1-access.log  timekeeper;#tmp_id_9/        access_log \/var\/log\/nginx\/server-block-1-access.log  timekeeper;#tmp_id_9/' /etc/nginx/nginx.conf
+
+# sed -i '/access_log \/var\/log\/nginx\/server-block-1-access.log  timekeeper;#tmp_id_9/a error_log \/var\/log\/nginx\/server-block-1-error.log;#tmp_id_10' /etc/nginx/nginx.conf
+
+# sed -i -e 's/error_log \/var\/log\/nginx\/server-block-1-error.log;#tmp_id_10/        error_log \/var\/log\/nginx\/server-block-1-error.log;#tmp_id_10/' /etc/nginx/nginx.conf
+
+# sed -i '/^        include \/etc\/nginx\/default\.d\/\*\.conf;#tmp_id_3/a \
+
+# #' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        location \/ {/s/^.*$/        location \/ {/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        }/s/^.*$/        }/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        error_page 404 \/404.html;/s/^.*$/        error_page 404 \/404.html;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#            location = \/40x.html {/s/^.*$/            location = \/40x.html {/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#        error_page 500 502 503 504 \/50x.html;/s/^.*$/        error_page 500 502 503 504 \/50x.html;/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#            location = \/50x.html {/s/^.*$/            location = \/50x.html {/' /etc/nginx/nginx.conf
+
+# sed -i -e '/^#    }/s/^.*$/    }/' /etc/nginx/nginx.conf
+
 sh -c "echo 'gzip_vary on;' >> /etc/nginx/conf.d/gzip.conf"
 
 sh -c "echo 'gzip_proxied any;' >> /etc/nginx/conf.d/gzip.conf"
@@ -237,6 +339,8 @@ firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --reload
 
 systemctl enable nginx
+
+apt-get -y install fail2ban
 
 systemctl enable fail2ban
 
@@ -284,9 +388,40 @@ cat /home/<os_username>/.credentials | chpasswd
 
 rm /home/<os_username>/.credentials
 
-systemctl status fail2ban firewalld nginx ntp sshd
+sudo apt-get -y install postgresql postgresql-contrib
 
+su - postgres
 
-ssh -p <defined_ssh_port> <os_username>@<vps_ip_addr>
+psql
 
+CREATE USER <os_username> WITH PASSWORD '<os_password>';
 
+CREATE DATABASE master OWNER <os_username>;
+
+\q
+
+su - <os_username>
+
+<os_password>
+
+psql master
+
+CREATE TABLE market (
+
+pk serial PRIMARY KEY,
+
+time float,
+
+open float,
+
+high float,
+
+low float,
+
+close float,
+
+volume integer
+
+);
+
+git clone git://github.com/katabasis/katabasis.git
