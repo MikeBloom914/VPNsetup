@@ -33,9 +33,9 @@ sh -c 'echo "<os_username>:<os_password>" > ~/.credentials'
 
 #cat ~/.ssh/id_rsa.pub   #to get public key if a new one
 
-scp vps_start.sh root@<vps_ip_addr>:/root/
-scp remote.sh root@<vps_ip_addr>:/root/
-scp end.sh root@<vps_ip_addr>:/root/
+# scp vps_start.sh root@<vps_ip_addr>:/root/
+# scp remote.sh root@<vps_ip_addr>:/root/
+# scp end.sh root@<vps_ip_addr>:/root/
 ssh root@<vps_ip_addr> 'bash vps_start.sh'
 #ssh -o "StrictHostKeyChecking no"
 
@@ -287,6 +287,5 @@ rm /home/<os_username>/.credentials
 systemctl status fail2ban firewalld nginx ntp sshd
 
 
-ssh -p <defined_ssh_port> <os_username>@<vps_ip_addr>
-
+ssh <os_username>@<vps_ip_addr>
 
